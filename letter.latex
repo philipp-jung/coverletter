@@ -1,0 +1,70 @@
+\documentclass[
+    foldmarks=false,      % print foldmarks
+    fromalign=no,     % letter head on the right
+    fromphone,           % show phone number
+    fromemail,           % show email
+    fromrule=no,
+    firsthead=off,        % disable briefkopf
+    version=last         % latest version of KOMA letter
+]{scrlttr2}
+
+\LoadLetterOption{DINmtext}
+\usepackage[ngerman]{babel}
+\usepackage{fontspec}
+\usepackage[utf8]{inputenc}
+
+\usepackage{parskip}
+
+\usepackage{graphics}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+
+\usepackage[right]{eurosym}
+
+\makeatletter
+    \setlength{\@tempskipa}{-1.2cm}%
+    \@addtoplength{toaddrheight}{\@tempskipa}
+\makeatother
+
+\setlength{\oddsidemargin}{\useplength{toaddrhpos}}
+\addtolength{\oddsidemargin}{-1in}
+\setlength{\textwidth}{\useplength{firstheadwidth}}
+
+\begin{document}
+    \setkomavar{fromname}{$author$}
+    \renewcommand*{\raggedsignature}{\raggedright}
+    \setkomavar{fromaddress}{
+        $for(return-address)$
+            $return-address$$sep$\\
+        $endfor$
+    }
+    \setkomavar{fromphone}{$phone$}
+    \setkomavar{fromemail}{$email$}
+    \setkomavar{signature}{$author$}
+
+    \setkomavar{date}{$date$}
+    \setkomavar{place}{$place$}
+
+    \setkomavar{subject}{$subject$}
+
+    \begin{letter}{%
+        $for(address)$
+            $address$$sep$\\
+        $endfor$
+    }
+
+        \opening{$opening$}
+
+        $body$
+
+        \closing{$closing$}
+
+        \ps $postskriptum$
+
+        $if(encludes)$
+            \setkomavar*{enclseparator}{Anlage}
+            \encl{$encludes$}
+        $endif$
+    \end{letter}
+\end{document}
